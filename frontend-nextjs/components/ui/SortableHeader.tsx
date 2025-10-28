@@ -1,4 +1,4 @@
-import { SortIcon } from './SortIcon';
+import  SortIcon  from './SortIcon';
 
 interface SortableHeaderProps<T = string> {
   field: T;
@@ -20,7 +20,7 @@ export default function SortableHeader<T = string>({ field, currentField, direct
     >
       <div className="flex items-center space-x-1">
         <span>{children}</span>
-        <SortIcon currentField={currentField?.toString()} sortField={field?.toString()} direction={direction} />
+        <SortIcon currentField={currentField?.toString()} sortField={String(field)} direction={direction} />
       </div>
     </th>
   );
