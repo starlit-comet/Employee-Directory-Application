@@ -2,14 +2,14 @@
 
 
 import { MongoClient, ObjectId } from "mongodb";
-import { MONGO_URI } from "../Constants/URLs.js";
+
 
 let db;
 let client;
 
 export const connectToMongoDB = async () => {
     try {
-        client = new MongoClient(MONGO_URI);
+        client = new MongoClient(process.env.MONGO_URI_ATLAS);
         await client.connect();
         db = client.db("spaceai_company");
         console.log("Connected to MongoDB successfully");
