@@ -7,7 +7,7 @@ This GraphQL server uses MongoDB as the database for persistent data storage.
 1. **MongoDB**: Make sure MongoDB is installed and running on your local machine
    - Default connection: `mongodb://localhost:27017`
    - Database name: `spaceai_company`
-   - Collections: `employees`, `companies`
+   - Collections: `employees`, `companyDepartment`
 
 ## Installation & Setup
 

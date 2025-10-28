@@ -1,4 +1,4 @@
-# SpaceAI Company Frontend
+# Employee Directory Application Frontend
 
 A Next.js frontend application that displays employee data from a GraphQL API.
 
