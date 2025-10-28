@@ -1,35 +1,41 @@
 export const typeDefs = `
     type Query {
-        getAllEmployees: [EmployeeBasic]
+        getAllEmployees(limit: Int = 10, offset: Int = 0): EmployeePaginated
         getEmployeeDetails(id: ID!): Employee
         getEmployeesByDepartment(department: String!): [Employee]
-        getCompanies: [CompanyDepartment]
-        getCompany(id: ID!): CompanyDepartment
+        getCompanies: [Department]
+        getCompany(id: ID!): Department
+        getAllDepartments: [Department]
+        getAll:[Department]
+    }
+    
+    type EmployeePaginated {
+        employees: [Employee]
+        totalCount: Int
+        hasMore: Boolean
     }
     
     type Employee {
         id: ID
         name: String
         position: String
-        department: String
+        department: Department
+        departmentId:String
         salary: Float
     }
     
-    type EmployeeBasic {
-        id: ID
-        name: String
-        position: String
-    }
+   
+  
     
-    type CompanyDepartment {
-        id: ID
+    type Department {
+        id: String
         name: String
         floor: String
     }
     
     type Mutation {
-        addEmployee(name: String!, position: String!, department: String!, salary: Float!): Employee
-        createCompany(name: String!, floor: String!): CompanyDepartment
+        addEmployee(name: String!, position: String!, departmentId: String!, salary: Float!): Employee
+        createCompany(name: String!, floor: String!): Department
     }
 `;
 

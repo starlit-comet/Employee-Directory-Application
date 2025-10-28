@@ -1,10 +1,10 @@
-import { Avatar } from './Avatar';
-import { Badge } from './Badge';
-import { ActionButtons } from './ActionButtons';
-import { EmployeeBasic } from '../../lib/types';
+import  Avatar  from './Avatar';
+import  Badge  from './Badge';
+import  ActionButtons  from './ActionButtons';
+import { Employee } from '../../lib/types';
 
 interface EmployeeRowProps {
-  employee: EmployeeBasic;
+  employee: Employee;
 }
 
 export default function EmployeeRow({ employee }: EmployeeRowProps) {
@@ -28,7 +28,7 @@ export default function EmployeeRow({ employee }: EmployeeRowProps) {
         </Badge>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-900">{employee?.company?.name || 'NO name'}</div>
+        <div className="text-sm text-gray-900">{employee?.department?.name || 'NO name'}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
         <ActionButtons 

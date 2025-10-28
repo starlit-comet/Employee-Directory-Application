@@ -10,4 +10,5 @@ export { EmployeeSkeleton, LoadingState } from './LoadingState';
 export { default as ErrorState } from './ErrorState';
 export { default as EmptyState } from './EmptyState';
 export { default as ActionButtons } from './ActionButtons';
+export { default as Toast } from './Toast';
 

@@ -1,0 +1,1 @@
+export const GraphQl_Link = 'http://localhost:3489/graphql'

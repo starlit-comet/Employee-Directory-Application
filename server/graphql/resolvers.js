@@ -1,9 +1,9 @@
-import { employeeOperations, companyOperations } from "../db/operations.js";
+import { employeeOperations, departmentOperations } from "../db/operations.js";
 
 export const resolvers = {
     Query: {
-        getAllEmployees: async () => {
-            return await employeeOperations.getAll();
+        getAllEmployees: async (parent, args) => {
+            return await employeeOperations.getAll(args.limit || 10, args.offset || 0);
         },
         getEmployeeDetails: async (parent, args) => {
             return await employeeOperations.getById(args.id);
@@ -12,18 +12,21 @@ export const resolvers = {
             return await employeeOperations.getByDepartment(args.department);
         },
         getCompanies: async () => {
-            return await companyOperations.getAll();
+            return await departmentOperations.getAll();
         },
         getCompany: async (parent, args) => {
-            return await companyOperations.getById(args.id);
+            return await departmentOperations.getById(args.id);
         },
+        getAllDepartments: async (parent, args) => {
+            return await departmentOperations.getAllDepartments()
+        }
     },
     Mutation: {
         addEmployee: async (parent, args) => {
             const employeeData = {
                 name: args.name,
                 position: args.position,
-                department: args.department,
+                departmentId: args.departmentId,
                 salary: args.salary,
             };
             return await employeeOperations.create(employeeData);
@@ -33,7 +36,7 @@ export const resolvers = {
                 name: args.name,
                 floor: args.floor,
             };
-            return await companyOperations.create(companyData);
+            return await departmentOperations.create(companyData);
         },
     },
 };

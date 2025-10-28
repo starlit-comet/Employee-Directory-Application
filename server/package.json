@@ -12,6 +12,10 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^5.0.0",
-    "graphql": "^16.11.0"
+    "graphql": "^16.11.0",
+    "mongodb": "^6.20.0"
+  },
+  "devDependencies": {
+    "diagnose-endpoint": "^1.1.3"
   }
 }

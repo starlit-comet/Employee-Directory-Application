@@ -7,7 +7,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SpaceAI Company - Employee Management",
+  title: "Employee Management",
   description: "Employee management system with GraphQL and MongoDB",
 };
 

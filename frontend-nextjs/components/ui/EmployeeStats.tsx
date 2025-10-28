@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import client from '../lib/apollo-client';
-import { GET_ALL_EMPLOYEES } from '../lib/queries';
-import { GetAllEmployeesResponse } from '../lib/types';
+import client from '../../lib/apollo-client';
+import { GET_ALL_EMPLOYEES } from '../../lib/queries';
+import { GetAllEmployeesResponse } from '../../lib/types';
 
 export default function EmployeeStats() {
   const [employeeCount, setEmployeeCount] = useState(0);
@@ -16,7 +16,7 @@ export default function EmployeeStats() {
           query: GET_ALL_EMPLOYEES,
           fetchPolicy: 'cache-first',
         });
-        setEmployeeCount(data?.getAllEmployees?.length || 0);
+        setEmployeeCount(data?.getAllEmployees?.totalCount || 0);
       } catch (error) {
         console.error('Error fetching employee count:', error);
       } finally {
