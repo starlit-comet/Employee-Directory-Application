@@ -282,7 +282,7 @@ export default function AddEmployeeModal({
   >
     <option value="">Select Department</option>
     {departments.map((dept) => (
-      <option key={dept.id} value={dept.id}>
+      <option key={dept.id} value={dept.id} className={'hover:bg-blue-300'}>
         {dept.name} {'-> floor: '} {dept.floor}
       </option>
     ))}

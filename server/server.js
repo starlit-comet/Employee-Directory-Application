@@ -3,7 +3,9 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { connectToMongoDB } from "./db/connection.js";
 import { typeDefs } from "./graphql/typeDefs.js";
 import { resolvers } from "./graphql/resolvers.js";
+import dotenv from 'dotenv'
 
+dotenv .config()
 // Start server
 const startServer = async () => {
     // Connect to MongoDB first
