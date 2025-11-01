@@ -75,120 +75,159 @@ const initializeSampleData = async () => {
                     position: "Software Engineer",
                     departmentId: departmentsMap.get("Engineering"),
                     salary: 100000,
+                    viewCount:0
                 },
                 {
                     name: "Jane Smith",
                     position: "Product Manager",
                     departmentId: departmentsMap.get("Product"),
                     salary: 120000,
+                    viewCount:0
+
                 },
                 {
                     name: "Mike Johnson",
                     position: "Senior Developer",
                     departmentId: departmentsMap.get("Engineering"),
                     salary: 130000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Sarah Wilson",
                     position: "HR Manager",
                     departmentId: departmentsMap.get("Human Resources"),
                     salary: 90000,
+                                        viewCount:0
+
                 },
                 {
                     name: "David Brown",
                     position: "Marketing Specialist",
                     departmentId: departmentsMap.get("Marketing"),
                     salary: 75000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Emily Chen",
                     position: "Data Scientist",
                     departmentId: departmentsMap.get("Engineering"),
                     salary: 115000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Robert Taylor",
                     position: "Sales Director",
                     departmentId: departmentsMap.get("Sales"),
                     salary: 140000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Lisa Anderson",
                     position: "Financial Analyst",
                     departmentId: departmentsMap.get("Finance"),
                     salary: 85000,
+                                        viewCount:0
+
                 },
                 {
                     name: "James Martinez",
                     position: "DevOps Engineer",
                     departmentId: departmentsMap.get("Engineering"),
                     salary: 110000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Amy Williams",
                     position: "Content Manager",
                     departmentId: departmentsMap.get("Marketing"),
                     salary: 70000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Chris Thompson",
                     position: "Operations Manager",
                     departmentId: departmentsMap.get("Operations"),
                     salary: 95000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Maria Garcia",
                     position: "Legal Counsel",
                     departmentId: departmentsMap.get("Legal"),
                     salary: 125000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Kevin Lee",
                     position: "Frontend Developer",
                     departmentId: departmentsMap.get("Engineering"),
                     salary: 95000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Jennifer Davis",
                     position: "Sales Representative",
                     departmentId: departmentsMap.get("Sales"),
                     salary: 65000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Michael Harris",
                     position: "Accountant",
                     departmentId: departmentsMap.get("Finance"),
                     salary: 72000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Rachel White",
                     position: "UX Designer",
                     departmentId: departmentsMap.get("Product"),
                     salary: 88000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Daniel Jackson",
                     position: "Backend Developer",
                     departmentId: departmentsMap.get("Engineering"),
                     salary: 105000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Jessica Martinez",
                     position: "Talent Acquisition",
                     departmentId: departmentsMap.get("Human Resources"),
                     salary: 68000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Andrew Kim",
                     position: "Marketing Manager",
                     departmentId: departmentsMap.get("Marketing"),
                     salary: 92000,
+                                        viewCount:0
+
                 },
                 {
                     name: "Lauren Brown",
                     position: "Legal Assistant",
                     departmentId: departmentsMap.get("Legal"),
                     salary: 55000,
+                                        viewCount:0
+
                 },
             ];
 

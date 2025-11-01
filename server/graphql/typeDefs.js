@@ -2,11 +2,8 @@ export const typeDefs = `
     type Query {
         getAllEmployees(limit: Int = 10, offset: Int = 0): EmployeePaginated
         getEmployeeDetails(id: ID!): Employee
-        getEmployeesByDepartment(department: String!): [Employee]
         getCompanies: [Department]
-        getCompany(id: ID!): Department
         getAllDepartments: [Department]
-        getAll:[Department]
     }
     
     type EmployeePaginated {
@@ -22,6 +19,7 @@ export const typeDefs = `
         department: Department
         departmentId:String
         salary: Float
+        viewCount : Int
     }
     
    
@@ -34,8 +32,10 @@ export const typeDefs = `
     }
     
     type Mutation {
-        addEmployee(name: String!, position: String!, departmentId: String!, salary: Float!): Employee
+        addEmployee(name: String!, position: String!, departmentId: String!, salary: Float!, viewCount : Int): Employee
         createCompany(name: String!, floor: String!): Department
+        incrementEmployeeViewCount(id: ID!): Employee
+        
     }
 `;
 

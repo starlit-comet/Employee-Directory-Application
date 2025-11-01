@@ -3,7 +3,11 @@
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import client from "../lib/apollo-client";
-import { GET_ALL_DEPARTMENTS, GET_ALL_EMPLOYEES } from "../lib/queries";
+// import { useState } from 'react'
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+// import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+
+import { GET_ALL_DEPARTMENTS, GET_ALL_EMPLOYEES, INCREMENT_EMPLOYEE_VIEW_COUNT } from "../lib/queries";
 import {
   Employee,
   GetAllEmployeesResponse,
@@ -18,6 +22,7 @@ import {
 import AddEmployeeModal from "./AddEmployeeModal";
 import Toast from "./ui/Toast";
 import ErrorState from "./ui/ErrorState";
+// import UserDataModal from "./ui/UserDataModal";
 
 // Loading skeleton component
 const EmployeeSkeleton = () => (
@@ -41,6 +46,10 @@ const EmployeeSkeleton = () => (
 
 export default function EmployeeList() {
   const router = useRouter();
+  const [isDetailPageActive,setDetailPageActive] = useState<boolean>(false)
+    const [open, setOpen] = useState(false)
+  
+  const [employeeData,setEmployeeData] = useState<any>({})
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -75,7 +84,19 @@ export default function EmployeeList() {
   ) => {
     setToast({ message, type });
   };
-
+   const handleDataOpenning = async (data: Employee) => {
+    setEmployeeData(data);
+    setOpen(true);
+    try {
+      await client.mutate({
+        mutation: INCREMENT_EMPLOYEE_VIEW_COUNT,
+        variables: { id: data.id },
+        refetchQueries: ['GetAllEmployees'],
+      });
+    } catch (e) {
+      console.error('Failed to increment view count', e);
+    }
+   };
   const fetchEmployees = async () => {
     try {
       setLoading(true);
@@ -160,6 +181,7 @@ export default function EmployeeList() {
   // Filter and sort employees
   const filteredAndSortedEmployees = useMemo(() => {
     let filtered = employees.filter((emp) => {
+      // console.log(filteredAndSortedEmployees)
       const matchesSearch =
         emp.name.toLowerCase().includes(filterConfig.search.toLowerCase()) ||
         emp.position
@@ -219,7 +241,6 @@ export default function EmployeeList() {
       <span className="text-blue-600">↓</span>
     );
   };
-
   if (loading) {
     return (
       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
@@ -400,6 +421,10 @@ export default function EmployeeList() {
                 </th>
 
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  View Count
+                </th>
+
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -439,10 +464,82 @@ export default function EmployeeList() {
                       {employee?.department?.name || "NO name"}
                     </span>
                   </td>
-
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {employee.viewCount}
+                    </div>
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex items-center space-x-2">
                       <button
+                        onClick={() => handleDataOpenning(employee)}
+                        className="rounded-md bg-blue-600 px-2.5 py-1.5 text-sm font-semibold text-black inset-ring inset-ring-white/5 hover:bg-blue-900"
+                      >
+                        Show details
+                      </button>
+                      <Dialog open={open} onClose={setOpen} className="relative z-10">
+                        <DialogBackdrop
+                          transition
+                          className="fixed inset-0 bg-gray-100/50 transition-opacity data-closed:opacity-50 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+                        />
+
+                        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <DialogPanel
+                              transition
+                              className="relative transform overflow-hidden rounded-lg bg-blue-600 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+                            >
+                              <div className="bg-blue-500 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div className="sm:flex sm:items-start">
+                                  <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-blue-500/10 text-blue-400 font-bold sm:mx-0 sm:size-10">
+                                    {(employeeData?.name || "?")
+                                      .toString()
+                                      .split(" ")
+                                      .map((n: string) => n[0])
+                                      .join("")
+                                      .toUpperCase()}
+                                  </div>
+                                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                    <DialogTitle as="h3" className="text-lg font-semibold text-white">
+                                      {employeeData?.name || "Employee Details"}
+                                    </DialogTitle>
+                                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                                      <div>
+                                        <p className="text-gray-400">Position</p>
+                                        <p className="text-white">{employeeData?.position ?? "-"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-gray-400">Department</p>
+                                        <p className="text-white">{employeeData?.department?.name ?? "-"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-gray-400">View Count</p>
+                                        <p className="text-white">{employeeData?.viewCount ?? 0}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-gray-400">ID</p>
+                                        <p className="text-white">{employeeData?.id ?? "-"}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                <button
+                                  type="button"
+                                  data-autofocus
+                                  onClick={() => setOpen(false)}
+                                  className="inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:w-auto"
+                                >
+                                  Close
+                                </button>
+                              </div>
+                            </DialogPanel>
+                          </div>
+                        </div>
+                      </Dialog>
+
+                      {/* <button
                         onClick={(e) => {
                           e.stopPropagation();
                           router.push(`/employee/${employee.id}`);
@@ -450,6 +547,7 @@ export default function EmployeeList() {
                         className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50 transition-colors"
                         title="View Employee"
                       >
+                      <button onClick = {} >show Details</button>
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -469,8 +567,13 @@ export default function EmployeeList() {
                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                           />
                         </svg>
-                      </button>
-                      <button
+                      </button> */}
+                      
+                      {/* <button onClick={()=>setDetailPageActive(true)}>Show Details</button>
+                     
+<div className="-z-10 relative" >user Data here</div> */}
+
+                      {/* <button
                         onClick={(e) => {
                           e.stopPropagation();
                           showNotification(
@@ -519,9 +622,10 @@ export default function EmployeeList() {
                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                           />
                         </svg>
-                      </button>
+                      </button> */}
                     </div>
                   </td>
+                  
                 </tr>
               ))}
             </tbody>
@@ -675,6 +779,12 @@ export default function EmployeeList() {
           type={toast.type}
           onClose={() => setToast(null)}
         />
+      )}
+      {isDetailPageActive && (
+        <div style={{zIndex:1}}className="" >
+
+          <h2>user data here</h2>
+        </div>
       )}
     </div>
   );

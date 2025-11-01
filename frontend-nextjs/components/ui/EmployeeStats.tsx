@@ -14,7 +14,7 @@ export default function EmployeeStats() {
       try {
         const { data } = await client.query<GetAllEmployeesResponse>({
           query: GET_ALL_EMPLOYEES,
-          fetchPolicy: 'cache-first',
+          fetchPolicy: 'no-cache',
         });
         setEmployeeCount(data?.getAllEmployees?.totalCount || 0);
       } catch (error) {

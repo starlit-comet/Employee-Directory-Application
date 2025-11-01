@@ -44,9 +44,9 @@ const employeeOperations = {
             department: {
                 id: emp.department?._id?.toString() || '',
                 name: emp.departmentName
-            }
+            },
+            viewCount:emp.viewCount
         }));
-
         return {
             employees: mappedEmployees,
             totalCount: totalCount,
@@ -85,7 +85,8 @@ const employeeOperations = {
                     name: employee.name,
                     position: employee.position,
                     department: employee.department || {},
-                    salary: employee.salary
+                    salary: employee.salary,
+                    viewCount : employee.viewCount
                 };
             }
             return null;
@@ -130,7 +131,8 @@ const employeeOperations = {
             name: emp.name,
             position: emp.position,
             department: emp.department?.name || '',
-            salary: emp.salary
+            salary: emp.salary,
+            viewCount:emp.viewCount
         }));
     },
 
@@ -176,12 +178,20 @@ const employeeOperations = {
             name: newEmployee.name,
             position: newEmployee.position,
             department: newEmployee.department?.name || '',
-            salary: newEmployee.salary
+            salary: newEmployee.salary,
+             viewCount:newEmployee.viewCount
+
         };
     },
     async getCount() {
 
-    }
+    },
+    async incrementViewCount(employeeId) {
+        const db = getDb();
+        const _id = new ObjectId(employeeId);
+        await db.collection('employees').updateOne({ _id }, { $inc: { viewCount: 1 } });
+        return this.getById(employeeId);
+    },
 };
 
 const departmentOperations = {

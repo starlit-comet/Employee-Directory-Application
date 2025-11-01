@@ -10,7 +10,7 @@ export interface Employee {
   name: string;
   position: string;
   salary: number;
- 
+ viewCount:number;
   department: Department; 
 }
 

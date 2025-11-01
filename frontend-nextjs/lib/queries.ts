@@ -1,5 +1,3 @@
-
-
 import { gql } from '@apollo/client';
 
 export const GET_ALL_EMPLOYEES = gql`
@@ -10,6 +8,7 @@ export const GET_ALL_EMPLOYEES = gql`
         name
         position
         salary
+        viewCount
         department {
           id
           name
@@ -22,13 +21,6 @@ export const GET_ALL_EMPLOYEES = gql`
   }
 `;
 
-export const  GET_ALL_EMPLOYEES_COUNT = gql`
-  query GetAllEmployeesCount{
-  getCount{
-    count
-  }
-  }
-`
 export const GET_COMPANY_DEPARTMENTS_COUNT = gql`
   query GetCompanyDeparmentsCount{
   getCompanies{
@@ -46,6 +38,7 @@ export const GET_EMPLOYEE_DETAILS = gql`
       name
       position
       salary
+      viewCount
       department {
         id
         name
@@ -64,16 +57,7 @@ export const GET_ALL_DEPARTMENTS = gql`
     }
   }
 `;
-export const GET_ALL = gql`
-  query getAll{
-  getAll{
-  id
-  name
-  floor 
-  }
-  }
-`
-
+  
 export const ADD_EMPLOYEE = gql`
   mutation AddEmployee(
     $name: String!,
@@ -96,3 +80,11 @@ export const ADD_EMPLOYEE = gql`
   }
 `;
 
+export const INCREMENT_EMPLOYEE_VIEW_COUNT = gql`
+  mutation IncrementEmployeeViewCount($id: ID!) {
+    incrementEmployeeViewCount(id: $id) {
+      id
+      viewCount
+    }
+  }
+`;
